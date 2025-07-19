@@ -1,0 +1,25 @@
+<div>
+    <h2>Invoice List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Due Date</th>
+                <th>Total Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let invoice of invoices">
+                <td>{{ invoice.customerName }}</td>
+                <td>{{ invoice.dueDate }}</td>
+                <td>{{ getTotal(invoice) | currency }}</td>
+                <td>
+                    <button [routerLink]="['/invoice-preview', invoice.id]">View</button>
+                    <button [routerLink]="['/invoice-edit', invoice.id]">Edit</button>
+                    <button (click)="deleteInvoice(invoice.id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

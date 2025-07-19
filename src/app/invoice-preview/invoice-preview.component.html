@@ -1,0 +1,105 @@
+<style>
+.invoice-card {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    padding: 32px 24px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+.invoice-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #2d3748;
+}
+.invoice-customer {
+    font-size: 1.2rem;
+    color: #4a5568;
+    margin-bottom: 8px;
+}
+.invoice-date {
+    font-size: 1rem;
+    color: #718096;
+    margin-bottom: 16px;
+}
+.invoice-items {
+    margin-bottom: 16px;
+}
+.invoice-items ul {
+    list-style: none;
+    padding: 0;
+}
+.invoice-items li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #edf2f7;
+    font-size: 1rem;
+    color: #2d3748;
+}
+.invoice-total {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #3182ce;
+    text-align: right;
+    margin-top: 16px;
+}
+.back-btn {
+    display: block;
+    width: 100%;
+    margin-top: 24px;
+    padding: 12px 0;
+    background: #3182ce;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.2s;
+}
+.back-btn:hover {
+    background: #2563eb;
+}
+.loading {
+    text-align: center;
+    margin-top: 80px;
+    color: #718096;
+    font-size: 1.2rem;
+}
+</style>
+
+<div *ngIf="invoice" class="invoice-card">
+    <div class="invoice-header">
+        <span class="invoice-title">Invoice Preview</span>
+        <span class="invoice-date">Due: {{ invoice.dueDate }}</span>
+    </div>
+    <div class="invoice-customer">
+        <strong>Customer:</strong> {{ invoice.customerName }}
+    </div>
+    <div class="invoice-items">
+        <h3 style="margin-bottom:8px; color:#2b6cb0;">Items</h3>
+        <ul>
+            <li *ngFor="let item of invoice.items">
+                <span>{{ item.description }}</span>
+                <span>{{ item.quantity }} × ${{ item.price }} = <strong>${{ item.quantity * item.price }}</strong></span>
+            </li>
+        </ul>
+    </div>
+    <div class="invoice-total">
+        Total: ${{ getTotal() }}
+    </div>
+    <a routerLink="/" class="back-btn">Back to List</a>
+</div>
+<div *ngIf="!invoice" class="loading">
+    <p>Loading invoice details...</p>
+</div>

@@ -1,0 +1,37 @@
+<div *ngIf="invoice">
+    <h2>Edit Invoice</h2>
+    <form (ngSubmit)="saveInvoice()">
+        <label for="customerName">Customer Name</label>
+        <input id="customerName" [(ngModel)]="invoice.customerName" name="customerName" required>
+
+        <label for="dueDate">Due Date</label>
+        <input id="dueDate" [(ngModel)]="invoice.dueDate" name="dueDate" type="date" required>
+
+        <div>
+            <h3>Items</h3>
+            <button type="button" (click)="addItem()">Add Item</button>
+            <div *ngFor="let item of invoice.items; let i = index">
+                <label>Description</label>
+                <input [(ngModel)]="item.description" name="description{{i}}" (input)="updateItemDescription(i, $event)"
+                    required>
+
+                <label>Quantity</label>
+                <button type="button" (click)="decrementQuantity(i)">-</button>
+                <input [(ngModel)]="item.quantity" name="quantity{{i}}" (input)="updateItemQuantity(i, $event)"
+                    type="number" required>
+                <button type="button" (click)="incrementQuantity(i)">+</button>
+
+                <label>Price</label>
+                <input [(ngModel)]="item.price" name="price{{i}}" (input)="updateItemPrice(i, $event)" type="number"
+                    required>
+
+                <button type="button" (click)="removeItem(i)">Remove</button>
+            </div>
+        </div>
+
+        <button type="submit">Save Invoice</button>
+    </form>
+</div>
+<div *ngIf="!invoice">
+    <p>Loading...</p>
+</div>
