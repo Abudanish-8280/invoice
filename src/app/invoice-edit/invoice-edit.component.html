@@ -1,31 +1,42 @@
 <div *ngIf="invoice">
-    <h2>Edit Invoice</h2>
+    <div class="edit-header">
+        <button type="button" class="back-btn" (click)="goBack()">
+            <span class="arrow-icon">&#8592;</span> Back
+        </button>
+        <h2>Edit Invoice</h2>
+    </div>
     <form (ngSubmit)="saveInvoice()">
         <label for="customerName">Customer Name</label>
-        <input id="customerName" [(ngModel)]="invoice.customerName" name="customerName" required>
+        <input type="text" id="customerName" [(ngModel)]="invoice.customerName" name="customerName" required>
 
         <label for="dueDate">Due Date</label>
         <input id="dueDate" [(ngModel)]="invoice.dueDate" name="dueDate" type="date" required>
 
         <div>
-            <h3>Items</h3>
-            <button type="button" (click)="addItem()">Add Item</button>
-            <div *ngFor="let item of invoice.items; let i = index">
-                <label>Description</label>
-                <input [(ngModel)]="item.description" name="description{{i}}" (input)="updateItemDescription(i, $event)"
-                    required>
-
-                <label>Quantity</label>
-                <button type="button" (click)="decrementQuantity(i)">-</button>
-                <input [(ngModel)]="item.quantity" name="quantity{{i}}" (input)="updateItemQuantity(i, $event)"
-                    type="number" required>
-                <button type="button" (click)="incrementQuantity(i)">+</button>
-
-                <label>Price</label>
-                <input [(ngModel)]="item.price" name="price{{i}}" (input)="updateItemPrice(i, $event)" type="number"
-                    required>
-
-                <button type="button" (click)="removeItem(i)">Remove</button>
+            <div class="items-header">
+                <h3>Items</h3>
+                <button type="button" class="add-item-btn" (click)="addItem()">Add Item</button>
+            </div>
+            <!-- Example for item row -->
+            <div class="item-row" *ngFor="let item of invoice.items; let i = index">
+                <div>
+                    <label>Description</label>
+                    <input type="text" [(ngModel)]="item.description" name="description{{i}}" required>
+                </div>
+                <div>
+                    <label>Quantity</label>
+                    <div class="quantity-controls">
+                        <button type="button" class="quantity-btn" (click)="decrementQuantity(i)">-</button>
+                        <input [(ngModel)]="item.quantity" name="quantity{{i}}" type="number" required
+                            style="width:50px;">
+                        <button type="button" class="quantity-btn" (click)="incrementQuantity(i)">+</button>
+                    </div>
+                </div>
+                <div>
+                    <label>Price</label>
+                    <input [(ngModel)]="item.price" name="price{{i}}" type="number" required>
+                </div>
+                <button type="button" class="remove-btn" (click)="removeItem(i)">Remove</button>
             </div>
         </div>
 
